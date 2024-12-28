@@ -7,8 +7,12 @@ A Software engineering project
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
+### Installing Dependencies
 
-In the project directory, you can run:
+#### Using Yarn
+Run:
+yarn install
+
 
 ### `yarn start`
 
