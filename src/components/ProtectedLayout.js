@@ -1,15 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import '../styles/ProtectedLayout.css'; // Add custom styles for the layout
+import '../styles/ProtectedLayout.css';
 
 const ProtectedLayout = () => {
     const navigate = useNavigate();
+    const [userRole, setUserRole] = useState(null);
 
-    // Mock function to log out (replace with actual logic later)
+    useEffect(() => {
+        const role = localStorage.getItem("userRole");
+        if (!role) {
+            navigate("/"); // Redirect to login if no role is found
+        } else {
+            setUserRole(role);
+        }
+    }, [navigate]);
+
     const handleLogout = () => {
-        // Clear session and redirect to login
-        navigate('/');
+        localStorage.removeItem("userRole");
+        navigate("/");
     };
+
+    if (!userRole) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className="protected-layout">
@@ -17,13 +30,31 @@ const ProtectedLayout = () => {
                 <nav>
                     <ul>
                         <li>
-                            <NavLink to="/student_dashboard" activeClassName="active">Dashboard</NavLink>
+                            <NavLink
+                                to={userRole === "student" ? "/student_dashboard" : "/staff_dashboard"}
+                                activeClassName="active"
+                            >
+                                Dashboard
+                            </NavLink>
                         </li>
+                        {userRole === "student" && (
+                            <li>
+                                <NavLink to="/register_courses" activeClassName="active">
+                                    Register Courses
+                                </NavLink>
+                            </li>
+                        )}
+                        {userRole === "staff" && (
+                            <li>
+                                <NavLink to="/course_overview" activeClassName="active">
+                                    Course Overview
+                                </NavLink>
+                            </li>
+                        )}
                         <li>
-                            <NavLink to="/courses/register" activeClassName="active">Register Courses</NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/profile" activeClassName="active">Profile</NavLink>
+                            <NavLink to="/profile" activeClassName="active">
+                                Profile
+                            </NavLink>
                         </li>
                         <li>
                             <button onClick={handleLogout}>Logout</button>
@@ -32,7 +63,7 @@ const ProtectedLayout = () => {
                 </nav>
             </aside>
             <main className="content">
-                <Outlet /> {/* Renders nested route content */}
+                <Outlet />
             </main>
         </div>
     );

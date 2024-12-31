@@ -5,7 +5,7 @@ import "../styles/Login.css";
 const Login = () => {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole] = useState(''); 
+    const [role, setRole] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -18,7 +18,10 @@ const Login = () => {
             return;
         }
 
-        // Mock login logic (replace with API call later)
+        // Save role to localStorage for role-based access
+        localStorage.setItem("userRole", role.toLowerCase()); // Store role as lowercase
+
+        // Redirect based on the role
         if (role === 'Student') {
             navigate('/student_dashboard');
         } else if (role === 'Staff') {

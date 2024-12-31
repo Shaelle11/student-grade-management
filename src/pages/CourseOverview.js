@@ -1,6 +1,6 @@
 import react from "react";
 
-function CourseOverview(){
+const CourseOverview = () => {
     return(
         <div>
             Course Overview
