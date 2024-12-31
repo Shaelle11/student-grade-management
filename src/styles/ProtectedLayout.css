@@ -1,0 +1,53 @@
+.protected-layout {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #0b2513;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar nav ul li {
+    margin: 15px 0;
+    padding: 1rem;
+}
+
+.sidebar nav ul li a,
+.sidebar nav ul li button {
+    color: white;
+    text-decoration: none;
+    background: none;
+    border: none;
+    padding: 1rem;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-size: 16px;
+}
+.sidebar nav ul li a.active,
+.sidebar nav ul li:hover {
+    background-color: #147565;
+    border-radius: 4px;
+}
+
+.sidebar nav ul li a.active,
+.sidebar nav ul li button:hover {
+    background-color: #147565;
+    border-radius: 4px;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    background-color: #ecf0f1;
+}
