@@ -26,6 +26,8 @@ const Login = () => {
             navigate('/student_dashboard');
         } else if (role === 'Staff') {
             navigate('/staff_dashboard');
+        }else if(role === 'Admin'){
+            navigate('/admin_dashboard')
         } else {
             setError('Invalid role selected!');
         }
@@ -63,6 +65,7 @@ const Login = () => {
                         onChange={(e) => setRole(e.target.value)}
                     >
                         <option value="">Select Role</option>
+                        <option value="Admin">Admin</option>
                         <option value="Student">Student</option>
                         <option value="Staff">Staff</option>
                     </select>

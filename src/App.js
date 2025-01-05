@@ -8,6 +8,9 @@ import RegisterCourses from './pages/RegisterCourses';
 import CourseOverview from './pages/CourseOverview';
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
+import AdminDashboard from './pages/AdminDashboard';
+
+
 
 const ProtectedRoute = ({ role, children }) => {
     const userRole = localStorage.getItem("userRole");
@@ -20,6 +23,14 @@ function App() {
             <Routes>
                 <Route path="/" element={<Login />} />
                 <Route element={<ProtectedLayout />}>
+                <Route
+                        path="/admin_dashboard"
+                        element={
+                            <ProtectedRoute role="admin">
+                                <AdminDashboard />
+                            </ProtectedRoute>
+                        }
+                    />
                     <Route
                         path="/staff_dashboard"
                         element={
