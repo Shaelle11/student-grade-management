@@ -1,54 +1,96 @@
+/* Full page background */
 .login-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+}
+
+/* Login box */
+.login-box {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 350px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Title */
+.login-box h2 {
+    margin-bottom: 1rem;
+    color: #1e3c72;
+}
+
+/* Input fields */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.input-group label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #555;
+}
+
+.input-group input {
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.3s;
 }
 
-h2 {
-    text-align: center;
-    margin-bottom: 20px;
+.input-group input:focus {
+    border-color: #1e3c72;
+    box-shadow: 0px 0px 5px rgba(30, 60, 114, 0.5);
 }
 
-.form-group {
-    margin-bottom: 15px;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-input,
-select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-button.login-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #0b2513;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-button.login-button:hover {
-    background-color: #147565;
-}
-
+/* Error message */
 .error-message {
     color: red;
-    font-size: 14px;
-    margin-top: 10px;
-    text-align: center;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+/* Login button */
+.login-btn {
+    background: #1e3c72;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-btn:hover {
+    background: #163b6a;
+}
+
+/* Smooth fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Responsive design */
+@media (max-width: 400px) {
+    .login-box {
+        width: 90%;
+    }
 }

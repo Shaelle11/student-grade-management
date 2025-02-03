@@ -1,50 +1,41 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
-
-// Navigation arrays
 const adminNavLinks = [
-    { name: "Dashboard", path: "/admin_dashboard" },
-    { name: "Manage Students", path: "/manage_users" },
-    { name: "Reports", path: "/reports" },
-    { name: "Profile", path: "/profile" },
+    { name: "Dashboard", path: "/admin" },
+    { name: "Manage Courses", path: "/admin/manage_courses" },
+    { name: "Manage Lecturers", path: "/admin/manage_lecturers" },
 ];
-
 const staffNavLinks = [
-    { name: "Dashboard", path: "/staff_dashboard" },
-    { name: "Course Overview", path: "/course_overview" },
-    { name: "Profile", path: "/profile" },
+    { name: "Dashboard", path: "/staff" },
+    { name: "Course Overview", path: "/staff/course-overview" },
+];
+const studentNavLinks = [
+    { name: "Dashboard", path: "/student" },
+    { name: "Register Courses", path: "/student/register-courses" },
+    { name: "Profile", path: "/student/profile" },
 ];
 
-const studentNavLinks = [
-    { name: "Dashboard", path: "/student_dashboard" },
-    { name: "Register Courses", path: "/register_courses" },
-    { name: "Profile", path: "/profile" },
-];
 
 const Navigation = ({ userRole }) => {
-    let navLinks = [];
-
-    // Determine navigation links based on role
-    switch (userRole) {
-        case "admin":
-            navLinks = adminNavLinks;
-            break;
-        case "staff":
-            navLinks = staffNavLinks;
-            break;
-        case "student":
-            navLinks = studentNavLinks;
-            break;
-        default:
-            break;
-    }
+    const navLinks =
+        userRole === "admin"
+            ? adminNavLinks
+            : userRole === "staff"
+            ? staffNavLinks
+            : userRole === "student"
+            ? studentNavLinks
+            : [];
 
     return (
         <nav>
             <ul>
-                {navLinks.map((item, index) => (
+                {navLinks.map((link, index) => (
                     <li key={index}>
-                        <NavLink to={item.path}>{item.name}</NavLink>
+                        <NavLink
+                            to={link.path}
+                            className={({ isActive }) => (isActive ? "active" : "")}
+                        >
+                            {link.name}
+                        </NavLink>
                     </li>
                 ))}
             </ul>

@@ -1,74 +1,43 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './pages/Login';
-import ProtectedLayout from './components/ProtectedLayout';
-import StaffDashboard from './pages/StaffDashboard';
-import StudentDashboard from './pages/StudentDashboard';
-import RegisterCourses from './pages/RegisterCourses';
-import CourseOverview from './pages/CourseOverview';
-import Profile from './pages/Profile';
-import NotFound from './pages/NotFound';
-import AdminDashboard from './pages/AdminDashboard';
+import StudentPage from './pages/StudentPage';
+import StudentDashboard from './components/StudentDashboard';
+import RegisterCourses from './components/RegisterCourses';
+import CourseOverview from './components/CourseOverview';
+import StaffPage from './pages/StaffPage';
+import StaffDashboard from './components/StaffDashboard';
+import CourseList from './components/CourseList';
+import AddResult from './components/AddResult';
+import HODPage from './pages/HODPage';
+import HODDashboard from './components/HODDashboard';
+import ManageLecturers from './components/ManageLecturers';
+import ManageCourses from './components/ManageCourses';
 
-
-
-const ProtectedRoute = ({ role, children }) => {
-    const userRole = localStorage.getItem("userRole");
-    return userRole === role ? children : <Navigate to="/" />;
-};
-
-function App() {
-    return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Login />} />
-                <Route element={<ProtectedLayout />}>
-                <Route
-                        path="/admin_dashboard"
-                        element={
-                            <ProtectedRoute role="admin">
-                                <AdminDashboard />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/staff_dashboard"
-                        element={
-                            <ProtectedRoute role="staff">
-                                <StaffDashboard />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/student_dashboard"
-                        element={
-                            <ProtectedRoute role="student">
-                                <StudentDashboard />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/register_courses"
-                        element={
-                            <ProtectedRoute role="student">
-                                <RegisterCourses />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/course_overview"
-                        element={
-                            <ProtectedRoute role="staff">
-                                <CourseOverview />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route path="/profile" element={<Profile />} />
-                </Route>
-                <Route path="*" element={<NotFound />} />
-            </Routes>
-        </Router>
-    );
-}
+const App = () => (
+  <Router>
+    <Routes>
+      <Route path="/" element={<Login />} />
+      
+      <Route path="/student" element={<StudentPage />}>
+        <Route path="dashboard" element={<StudentDashboard />} />
+        <Route path="register-courses" element={<RegisterCourses />} />
+        <Route path="course-overview" element={<CourseOverview />} />
+  </Route>
+        
+        <Route path="/lecturer" element={<StaffPage/>}>
+          <Route path="dashboard" element={<StaffDashboard />} />
+          <Route path="course-list" element={<CourseList />} />
+          <Route path="add-result" element={<AddResult />} />
+        </Route>
+        <Route path="/hod" element={<HODPage />}>
+        <Route path="dashboard" element={<HODDashboard/>} />
+        <Route path="manage-lecturers" element={<ManageLecturers/>} />
+        <Route path="manage-courses" element={<ManageCourses/>} />
+      </Route>
+      </Routes>
+    </Router>
+  );
+  
 
 export default App;
