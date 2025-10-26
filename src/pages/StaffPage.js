@@ -4,7 +4,7 @@ import '../styles/Dashboard.css';
 
 const StaffPage = () => {
   return (
-    <div className="lecturer-page-container">
+    <div className="page-container">
       <div className="sidebar">
         <h2>Staff Dashboard</h2>
         <nav>

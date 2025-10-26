@@ -2,43 +2,20 @@ import React, { useState, useEffect } from "react";
 
 const CourseOverview = () => {
   const [courses, setCourses] = useState([]);
-  const [students, setStudents] = useState({});
   const [results, setResults] = useState({});
   const [expandedCourse, setExpandedCourse] = useState(null);
-
-  const lecturerId = localStorage.getItem("userId");
+  const studentId = localStorage.getItem("userId");
 
   useEffect(() => {
-    // Fetch courses assigned to lecturer
-    const assignments = JSON.parse(localStorage.getItem("assignments")) || [];
-    const storedCourses = JSON.parse(localStorage.getItem("courses")) || [];
+    const storedResults = JSON.parse(localStorage.getItem("results")) || {};
+    const registeredCourses = JSON.parse(localStorage.getItem(`registeredCourses_${studentId}`)) || [];
 
-    const assignedCourses = assignments
-      .filter((assignment) => assignment.lecturer === lecturerId)
-      .map((assignment) =>
-        storedCourses.find((course) => course.name === assignment.course)
-      )
-      .filter((course) => course);
-
-    setCourses(assignedCourses);
-
-    // Fetch students and results per course
-    const studentsPerCourse = {};
-    const resultsPerCourse = JSON.parse(localStorage.getItem("results")) || {};
-
-    assignedCourses.forEach((course) => {
-      const registeredStudents =
-        JSON.parse(localStorage.getItem(`students_${course.code}`)) || [];
-      studentsPerCourse[course.code] = registeredStudents.map((studentId) => {
-        const studentData =
-          JSON.parse(localStorage.getItem(`student_${studentId}`)) || {};
-        return { id: studentId, name: studentData.name || "Unknown Student" };
-      });
-    });
-
-    setStudents(studentsPerCourse);
-    setResults(resultsPerCourse);
-  }, [lecturerId]);
+    console.log("Student ID:", studentId);
+    console.log("Stored Results:", storedResults);
+    
+    setCourses(registeredCourses);
+    setResults(storedResults);
+  }, [studentId]);
 
   const toggleCourse = (courseCode) => {
     setExpandedCourse(expandedCourse === courseCode ? null : courseCode);
@@ -46,10 +23,10 @@ const CourseOverview = () => {
 
   return (
     <div className="course-overview">
-      <h1>Course Overview</h1>
+      <h1>My Course Results</h1>
 
       {courses.length === 0 ? (
-        <p>No courses assigned to you.</p>
+        <p>No Results yet.</p>
       ) : (
         courses.map((course) => (
           <div key={course.code} className="course-section">
@@ -63,8 +40,7 @@ const CourseOverview = () => {
                   <thead>
                     <tr>
                       <th>S/N</th>
-                      <th>Student ID</th>
-                      <th>Student Name</th>
+                      <th>Course Code</th>
                       <th>First CA</th>
                       <th>Second CA</th>
                       <th>Exam</th>
@@ -72,22 +48,14 @@ const CourseOverview = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {(students[course.code] || []).map((student, index) => {
-                      const studentScores =
-                        results[course.code]?.[student.id] || {};
-
-                      return (
-                        <tr key={student.id}>
-                          <td>{index + 1}</td>
-                          <td>{student.id}</td>
-                          <td>{student.name}</td>
-                          <td>{studentScores.ca1 || "N/A"}</td>
-                          <td>{studentScores.ca2 || "N/A"}</td>
-                          <td>{studentScores.exam || "N/A"}</td>
-                          <td>{studentScores.total || "N/A"}</td>
-                        </tr>
-                      );
-                    })}
+                    <tr>
+                      <td>1</td>
+                      <td>{course.code}</td>
+                      <td>{results[course.code]?.[studentId]?.ca1 || "N/A"}</td>
+                      <td>{results[course.code]?.[studentId]?.ca2 || "N/A"}</td>
+                      <td>{results[course.code]?.[studentId]?.exam || "N/A"}</td>
+                      <td>{results[course.code]?.[studentId]?.total || "N/A"}</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

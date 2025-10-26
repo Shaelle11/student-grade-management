@@ -4,7 +4,7 @@ import '../styles/Dashboard.css'; // Add your custom styles here
 
 const HODPage = () => {
   return (
-    <div className="hod-page-container">
+    <div className="page-container">
       <div className="sidebar">
         <h2>HOD Dashboard</h2>
         <nav>

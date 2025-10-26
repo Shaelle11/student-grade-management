@@ -1,0 +1,111 @@
+.manage-courses {
+    max-width: 800px;
+    margin: auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1, h3 {
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .form-section {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .form-group input {
+    width: calc(50% - 10px);
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  
+  .action-btn {
+    width: 100%;
+    padding: 10px;
+    background-color:#1e3c72;;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .action-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .error-message {
+    background: #ffdddd;
+    color: #d33;
+    padding: 10px;
+    border-left: 5px solid #d33;
+    position: relative;
+    margin-bottom: 10px;
+  }
+  
+  .dismiss-btn {
+    background: none;
+    border: none;
+    color: #d33;
+    font-size: 1.2rem;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .edit-btn, .delete-btn {
+    padding: 5px 10px;
+    margin: 2px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  .edit-btn {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .edit-btn:hover {
+    opacity: 0.8;
+  }
+  
+  .delete-btn {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .delete-btn:hover {
+    opacity: 0.8;
+  }
+  

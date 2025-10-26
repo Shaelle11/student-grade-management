@@ -1,13 +1,15 @@
-/* General container styling */
-.dashboard-container {
+/* Ensure the entire page uses flexbox */
+.page-container {
     display: flex;
-    height: 100vh;
+    height: 100vh;  /* Full viewport height */
     background: #f4f4f9;
+    overflow: hidden;
 }
 
-/* Sidebar styling */
+/* Sidebar (fixed width, no shrinking) */
 .sidebar {
-    width: 250px;
+    width: 250px; /* Adjust if needed */
+    min-height: 100vh; /* Ensure sidebar takes full height */
     background: #1e3c72;
     color: white;
     padding: 20px;
@@ -15,16 +17,16 @@
     flex-direction: column;
     align-items: center;
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0; /* Prevents sidebar from shrinking */
 }
 
-/* Dashboard title */
+/* Sidebar navigation */
 .sidebar h2 {
     font-size: 1.5rem;
     margin-bottom: 20px;
     text-align: center;
 }
 
-/* Navigation menu */
 .sidebar nav ul {
     list-style: none;
     padding: 0;
@@ -36,7 +38,6 @@
     text-align: center;
 }
 
-/* Sidebar links */
 .sidebar nav ul li a {
     text-decoration: none;
     color: white;
@@ -51,14 +52,16 @@
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* Main content area */
+/* Main content (grows to fill space) */
 .main-content {
-    flex: 1;
+    flex-grow: 1; /* Take up remaining space */
     padding: 20px;
     overflow-y: auto;
+    background: white;
+    min-height: 100vh; /* Ensures it doesn't collapse */
 }
 
-/* Responsive design */
+/* Responsive fix: Sidebar on top for smaller screens */
 @media (max-width: 768px) {
     .dashboard-container {
         flex-direction: column;
@@ -68,10 +71,6 @@
         width: 100%;
         height: auto;
         padding: 10px;
-    }
-
-    .sidebar h2 {
-        font-size: 1.2rem;
     }
 
     .sidebar nav ul {

@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from "react";
+import "../styles/AddResult.css";
 
 const AddResult = () => {
-  const [courses, setCourses] = useState([]); // Lecturer's assigned courses
-  const [students, setStudents] = useState({}); // Students per course
-  const [scores, setScores] = useState({}); // Scores entered by lecturer
+  const [courses, setCourses] = useState([]); 
+  const [students, setStudents] = useState({}); 
+  const [scores, setScores] = useState({}); 
   const [expandedCourse, setExpandedCourse] = useState(null);
   const lecturerId = localStorage.getItem("userId");
 
   useEffect(() => {
-    // Fetch all assignments and courses
+    const storedResults = JSON.parse(localStorage.getItem("results")) || {};
+    setScores(storedResults);
+  }, []);
+
+  useEffect(() => {
     const assignments = JSON.parse(localStorage.getItem("assignments")) || [];
     const storedCourses = JSON.parse(localStorage.getItem("courses")) || [];
 
-    // Filter courses assigned to this lecturer
     const assignedCourses = assignments
       .filter((assignment) => assignment.lecturer === lecturerId)
       .map((assignment) =>
@@ -22,14 +26,13 @@ const AddResult = () => {
 
     setCourses(assignedCourses);
 
-    // Load students for each assigned course
     const studentsPerCourse = {};
     assignedCourses.forEach((course) => {
       const registeredStudents =
         JSON.parse(localStorage.getItem(`students_${course.code}`)) || [];
       studentsPerCourse[course.code] = registeredStudents.map((studentId) => {
         const studentData =
-          JSON.parse(localStorage.getItem(`student_${studentId}`)) || {}; // Assuming student data is stored separately
+          JSON.parse(localStorage.getItem(`student_${studentId}`)) || {}; 
         return { id: studentId, name: studentData.name || "Unknown Student" };
       });
     });
@@ -54,7 +57,6 @@ const AddResult = () => {
         },
       };
 
-      // Auto-calculate total score
       const ca1 = parseFloat(updatedScores[courseCode][studentId]?.ca1) || 0;
       const ca2 = parseFloat(updatedScores[courseCode][studentId]?.ca2) || 0;
       const exam = parseFloat(updatedScores[courseCode][studentId]?.exam) || 0;
@@ -65,11 +67,26 @@ const AddResult = () => {
   };
 
   const handleSaveScores = (courseCode) => {
-    const storedResults = JSON.parse(localStorage.getItem("results")) || {};
-    storedResults[courseCode] = { ...storedResults[courseCode], ...scores[courseCode] };
+    setScores((prevScores) => {
+      const updatedScores = { ...prevScores };
+      const storedResults = JSON.parse(localStorage.getItem("results")) || {};
 
-    localStorage.setItem("results", JSON.stringify(storedResults));
-    alert("Scores saved successfully!");
+      if (!storedResults[courseCode]) {
+        storedResults[courseCode] = {};
+      }
+
+      Object.keys(updatedScores[courseCode]).forEach((studentId) => {
+        if (!storedResults[courseCode][studentId]) {
+          storedResults[courseCode][studentId] = {};
+        }
+        storedResults[courseCode][studentId] = { ...updatedScores[courseCode][studentId] };
+      });
+
+      localStorage.setItem("results", JSON.stringify(storedResults));
+      alert("Scores saved successfully!");
+
+      return updatedScores;
+    });
   };
 
   const handleDeleteScore = (courseCode, studentId) => {
@@ -80,7 +97,6 @@ const AddResult = () => {
       return updatedScores;
     });
 
-    // Also remove from localStorage
     const storedResults = JSON.parse(localStorage.getItem("results")) || {};
     if (storedResults[courseCode]) {
       delete storedResults[courseCode][studentId];
@@ -125,35 +141,15 @@ const AddResult = () => {
                         <td>{student.id}</td>
                         <td>{student.name}</td>
                         <td>
-                          <input
-                            type="number"
-                            value={scores[course.code]?.[student.id]?.ca1 || ""}
-                            onChange={(e) =>
-                              handleScoreChange(course.code, student.id, "ca1", e.target.value)
-                            }
-                          />
+                          <input type="number" value={scores[course.code]?.[student.id]?.ca1 || ""} onChange={(e) => handleScoreChange(course.code, student.id, "ca1", e.target.value)} />
                         </td>
                         <td>
-                          <input
-                            type="number"
-                            value={scores[course.code]?.[student.id]?.ca2 || ""}
-                            onChange={(e) =>
-                              handleScoreChange(course.code, student.id, "ca2", e.target.value)
-                            }
-                          />
+                          <input type="number" value={scores[course.code]?.[student.id]?.ca2 || ""} onChange={(e) => handleScoreChange(course.code, student.id, "ca2", e.target.value)} />
                         </td>
                         <td>
-                          <input
-                            type="number"
-                            value={scores[course.code]?.[student.id]?.exam || ""}
-                            onChange={(e) =>
-                              handleScoreChange(course.code, student.id, "exam", e.target.value)
-                            }
-                          />
+                          <input type="number" value={scores[course.code]?.[student.id]?.exam || ""} onChange={(e) => handleScoreChange(course.code, student.id, "exam", e.target.value)} />
                         </td>
-                        <td>
-                          {scores[course.code]?.[student.id]?.total || 0}
-                        </td>
+                        <td>{scores[course.code]?.[student.id]?.total || 0}</td>
                         <td>
                           <button onClick={() => handleDeleteScore(course.code, student.id)}>Delete</button>
                         </td>

@@ -1,0 +1,128 @@
+.course-list-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.course-list-title {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.no-courses {
+  font-size: 16px;
+  color: #777;
+}
+
+.course-list {
+  list-style: none;
+  padding: 0;
+}
+
+.course-item {
+  background: white;
+  padding: 10px 15px;
+  margin: 10px 0;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.course-item:hover {
+  transform: scale(1.02);
+}
+
+.course-name {
+  font-weight: bold;
+  color: #444;
+}
+
+.course-code {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Register Courses Styles */
+.register-courses {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 25px;
+  background-color: #eef6ff;
+  border-radius: 12px;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.register-courses h1, .register-courses h2 {
+  font-size: 22px;
+  color: #004085;
+  margin-bottom: 15px;
+}
+
+.register-courses ul {
+  list-style: none;
+  padding: 0;
+}
+
+.register-courses li {
+  background: white;
+  padding: 12px 18px;
+  margin: 12px 0;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.register-courses li:hover {
+  transform: scale(1.03);
+}
+
+.register-courses table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.register-courses th, .register-courses td {
+  border: 1px solid #ccc;
+  padding: 12px;
+  text-align: center;
+}
+
+.register-courses th {
+  background-color: #d1ecf1;
+  font-weight: bold;
+}
+
+.register-courses button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background-color: #28a745;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.register-courses button:hover {
+  background-color: #218838;
+}
+
+.register-courses .remove-btn {
+  background-color: #dc3545;
+}
+
+.register-courses .remove-btn:hover {
+  background-color: #c82333;
+}

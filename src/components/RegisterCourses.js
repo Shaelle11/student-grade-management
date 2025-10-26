@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import "../styles/CourseList.css"
 
 const RegisterCourses = () => {
   const [courses, setCourses] = useState([]); // Available courses

@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from "react";
+import '../styles/managecourses.css';
+
 
 const ManageCourses = () => {
   const [courses, setCourses] = useState([]);
-  const [courseName, setCourseName] = useState("");
-  const [courseCode, setCourseCode] = useState("");
-  const [courseUnits, setCourseUnits] = useState("");
-  const [courseLevel, setCourseLevel] = useState("");
+  const [form, setForm] = useState({
+    name: "",
+    code: "",
+    units: "",
+    level: "",
+  });
   const [editingIndex, setEditingIndex] = useState(null);
   const [error, setError] = useState("");
 
-  // ✅ Load courses from localStorage when the component mounts
   useEffect(() => {
-    const storedCourses = JSON.parse(localStorage.getItem("courses")) || [];
-    setCourses(storedCourses);
+    setCourses(JSON.parse(localStorage.getItem("courses")) || []);
   }, []);
 
-  // 🔹 Sort courses by Level, then Units, then Alphabetically
   const sortCourses = (coursesList) => {
     return coursesList.sort((a, b) => {
       if (a.level !== b.level) return a.level - b.level;
@@ -24,61 +25,46 @@ const ManageCourses = () => {
     });
   };
 
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
   const handleAddOrUpdateCourse = () => {
-    if (!courseName || !courseCode || !courseUnits || !courseLevel) {
+    if (!form.name || !form.code || !form.units || !form.level) {
       setError("All fields are required!");
       return;
     }
 
-    let updatedCourses;
+    const updatedCourses = [...courses];
+    const newCourse = {
+      name: form.name,
+      code: form.code,
+      units: parseInt(form.units),
+      level: parseInt(form.level),
+    };
+
     if (editingIndex !== null) {
-      // ✅ Update existing course
-      updatedCourses = [...courses];
-      updatedCourses[editingIndex] = {
-        name: courseName,
-        code: courseCode,
-        units: parseInt(courseUnits),
-        level: parseInt(courseLevel),
-      };
+      updatedCourses[editingIndex] = newCourse;
     } else {
-      // ✅ Add new course
-      updatedCourses = [
-        ...courses,
-        {
-          name: courseName,
-          code: courseCode,
-          units: parseInt(courseUnits),
-          level: parseInt(courseLevel),
-        },
-      ];
+      updatedCourses.push(newCourse);
     }
 
-    // 🔹 Sort & Store in localStorage
-    updatedCourses = sortCourses(updatedCourses);
-    setCourses(updatedCourses);
-    localStorage.setItem("courses", JSON.stringify(updatedCourses));
+    const sortedCourses = sortCourses(updatedCourses);
+    setCourses(sortedCourses);
+    localStorage.setItem("courses", JSON.stringify(sortedCourses));
 
-    // ✅ Clear form fields
-    setCourseName("");
-    setCourseCode("");
-    setCourseUnits("");
-    setCourseLevel("");
+    setForm({ name: "", code: "", units: "", level: "" });
     setEditingIndex(null);
     setError("");
   };
 
   const handleEditCourse = (index) => {
-    const course = courses[index];
-    setCourseName(course.name);
-    setCourseCode(course.code);
-    setCourseUnits(course.units);
-    setCourseLevel(course.level);
+    setForm(courses[index]);
     setEditingIndex(index);
   };
 
   const handleDeleteCourse = (index) => {
     if (!window.confirm("Are you sure you want to delete this course?")) return;
-
     const updatedCourses = courses.filter((_, i) => i !== index);
     setCourses(updatedCourses);
     localStorage.setItem("courses", JSON.stringify(updatedCourses));
@@ -88,44 +74,30 @@ const ManageCourses = () => {
     <div className="manage-courses">
       <h1>Manage Courses</h1>
 
-      <div>
-        <h3>{editingIndex !== null ? "Edit Course" : "Add New Course"}</h3>
-        <div>
-          <input
-            type="text"
-            value={courseName}
-            onChange={(e) => setCourseName(e.target.value)}
-            placeholder="Course Name"
-          />
-          <input
-            type="text"
-            value={courseCode}
-            onChange={(e) => setCourseCode(e.target.value)}
-            placeholder="Course Code"
-          />
-          <input
-            type="number"
-            value={courseUnits}
-            onChange={(e) => setCourseUnits(e.target.value)}
-            placeholder="Course Units"
-          />
-          <input
-            type="number"
-            value={courseLevel}
-            onChange={(e) => setCourseLevel(e.target.value)}
-            placeholder="Course Level"
-          />
-          {error && <p className="error-message">{error}</p>}
-          <button onClick={handleAddOrUpdateCourse}>
-            {editingIndex !== null ? "Update Course" : "Add Course"}
-          </button>
+      {error && (
+        <div className="error-message">
+          {error}
+          <button className="dismiss-btn" onClick={() => setError("")}>×</button>
         </div>
+      )}
+
+      <div className="form-section">
+        <h3>{editingIndex !== null ? "Edit Course" : "Add New Course"}</h3>
+        <div className="form-group">
+          <input type="text" name="name" value={form.name} onChange={handleChange} placeholder="Course Name" />
+          <input type="text" name="code" value={form.code} onChange={handleChange} placeholder="Course Code" />
+          <input type="number" name="units" value={form.units} onChange={handleChange} placeholder="Course Units" />
+          <input type="number" name="level" value={form.level} onChange={handleChange} placeholder="Course Level" />
+        </div>
+        <button className="action-btn" onClick={handleAddOrUpdateCourse}>
+          {editingIndex !== null ? "Update Course" : "Add Course"}
+        </button>
       </div>
 
-      <div>
+      <div className="courses-section">
         <h3>Available Courses</h3>
         {courses.length > 0 ? (
-          <table border="1">
+          <table>
             <thead>
               <tr>
                 <th>S/N</th>
@@ -145,8 +117,8 @@ const ManageCourses = () => {
                   <td>{course.units}</td>
                   <td>{course.level}</td>
                   <td>
-                    <button onClick={() => handleEditCourse(index)}>Edit</button>
-                    <button onClick={() => handleDeleteCourse(index)}>Delete</button>
+                    <button className="edit-btn" onClick={() => handleEditCourse(index)}>Edit</button>
+                    <button className="delete-btn" onClick={() => handleDeleteCourse(index)}>Delete</button>
                   </td>
                 </tr>
               ))}
