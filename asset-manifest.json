@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/student-grade-management/static/css/main.d18ccec9.css",
+    "main.js": "/student-grade-management/static/js/main.801fbb33.js",
+    "static/js/453.7f62603c.chunk.js": "/student-grade-management/static/js/453.7f62603c.chunk.js",
+    "index.html": "/student-grade-management/index.html",
+    "main.d18ccec9.css.map": "/student-grade-management/static/css/main.d18ccec9.css.map",
+    "main.801fbb33.js.map": "/student-grade-management/static/js/main.801fbb33.js.map",
+    "453.7f62603c.chunk.js.map": "/student-grade-management/static/js/453.7f62603c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d18ccec9.css",
+    "static/js/main.801fbb33.js"
+  ]
+}
